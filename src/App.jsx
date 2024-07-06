@@ -67,6 +67,7 @@
     const[alertwrongVisible,setalertwrongVisible]=useState(false);
     // Create a new Map
     const myMap = new Map();
+    let x=0;
 
 
 
@@ -121,64 +122,108 @@
     };
 
     const handleSelect1=()=>{
-      if(current2?.id==shuffledHistoryDeck[historyIndex].id || current3?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
-        return true;
-      }
+      
+   
       if (historyselect && shuffledHistoryDeck.length > 0) {
+        if(conditionforhis(shuffledHistoryDeck[historyIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
+        if(current2?.id==shuffledHistoryDeck[historyIndex].id || current3?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
+          return;
+        }
+
+
         setCurrent1(shuffledHistoryDeck[historyIndex]);
-        // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
+        if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
+       // console.log(shuffledExaminationDeck[examinationIndex]);
         setCurrent1(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
       }
+      x++;
     }
     const handleSelect2=()=>{
-      if(current1?.id==shuffledHistoryDeck[historyIndex].id || current3?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
-        return true;
-      }
+     
       if (historyselect && shuffledHistoryDeck.length > 0) {
+        if(conditionforhis(shuffledHistoryDeck[historyIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
+        if(current1?.id==shuffledHistoryDeck[historyIndex].id || current3?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
+          return true;
+        }
         setCurrent2(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
+        if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
         setCurrent2(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
       }
+      x++;
     }
     const handleSelect3=()=>{
-      if(current2?.id==shuffledHistoryDeck[historyIndex].id || current1?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
-        return true;
-      }
+      
       if (historyselect && shuffledHistoryDeck.length > 0) {
+        if(conditionforhis(shuffledHistoryDeck[historyIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
+        if(current2?.id==shuffledHistoryDeck[historyIndex].id || current1?.id==shuffledHistoryDeck[historyIndex].id || current4?.id==shuffledHistoryDeck[historyIndex].id){
+          return true;
+        }
         setCurrent3(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 3) % shuffledHistoryDeck.length);
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
+        if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
         setCurrent3(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
       }
+      x++;
     }
     const handleSelect4=()=>{
-      if(current2.id==shuffledHistoryDeck[historyIndex].id || current3.id==shuffledHistoryDeck[historyIndex].id || current1.id==shuffledHistoryDeck[historyIndex].id){
-        return true;
-      }
+      
       if (historyselect && shuffledHistoryDeck.length > 0) {
+        if(conditionforhis(shuffledHistoryDeck[historyIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
+        if(current2.id==shuffledHistoryDeck[historyIndex].id || current3.id==shuffledHistoryDeck[historyIndex].id || current1.id==shuffledHistoryDeck[historyIndex].id){
+          return true;
+        }
         setCurrent4(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
+        if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
+          alert("meaximum 3 card can seleted");
+          return;
+        }
         setCurrent4(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
       }
+      x++;
+      result();
     }
 
     const result=()=>{
-      if(!current1 || !current2 || !current3 || !current4){
+      if(x>=4){
         alert('select 4 box');
       }
         if(current1.code=='H' && current2.code=='H' && current3.code=='H' && current4.code=='H'){
@@ -192,10 +237,47 @@
     
     }
 
+     const conditionforhis=(curr)=>{
+      console.log(curr);
+          if((current1?.type=='history' && current2?.type=='history' && current3?.type=='history') && curr.type=='history'){
+            return true;
+          }
+          else if((current1?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr.type=='history'){
+            return true;
+          }
+          else if((current1?.type=='history' && current3?.type=='history' && current4?.type=='history') && curr.type=='history'){
+            return true;
+          }
+          else if((current3?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr.type=='history'){
+            return true;
+          }else{
+            return false;
+          }
+     }
+     const conditionforexam=(curr)=>{
+      console.log(curr);
+          if((current1?.type=='exam' && current2?.type=='exam' && current3?.type=='exam') && curr.type=='exam'){
+            return true;
+          }
+          else if((current1?.type=='exam' && current2?.type=='exam' && current4?.type=='exam') && curr.type=='exam'){
+            return true;
+          }
+          else if((current1?.type=='exam' && current3?.type=='exam' && current4?.type=='exam') && curr.type=='exam'){
+            return true;
+          }
+          else if((current3?.type=='exam' && current2?.type=='exam' && current4?.type=='exam') && curr.type=='exam'){
+            return true;
+          }else{
+            return false;
+          }
+     }
+
+
+
     return (
       <div>
         <div className="w-full h-auto md:flex">
-          {/* History Section */}
+          {/* history Section */}
           <div className="w-full h-80 m-8 border border-black flex flex-col items-center">
             <div className="text-pink-500 font-bold">History</div>
             <div
@@ -246,7 +328,7 @@
 </div>
 
           <div className='flex flex-col items-center m-9'>
-          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={result}>Submit</button>
+          {/* <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={result}>Submit</button> */}
       <div>
           <p className="mt-4 text-xl">Countdown: {countdown}s</p>
           </div>
@@ -274,7 +356,7 @@
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                 onClick={() =>{setAlertVisible(false);window.location.reload();}}
               >
-                OK
+                play again
               </button>
             </div>
           </div>
