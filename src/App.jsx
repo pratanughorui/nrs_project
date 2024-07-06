@@ -65,10 +65,11 @@
     const [countdown, setCountdown] = useState(60);
     const [alertVisible, setAlertVisible] = useState(false);
     const[alertwrongVisible,setalertwrongVisible]=useState(false);
+    const[sc,setsc]=useState(0);
     // Create a new Map
     const myMap = new Map();
-    let x=0;
-
+    
+    var x=0;
 
 
     useEffect(() => {
@@ -78,6 +79,7 @@
       if (examinationselect && shuffledExaminationDeck.length === 0) {
         setShuffledExaminationDeck(shuffleArray([...initialExaminationDeck]));
       }
+     x=0;
     }, []);
     useEffect(() => {
       if (countdown <= 0) {
@@ -86,7 +88,7 @@
       }
       const timer = setInterval(() => {
         setCountdown(prev => prev - 1);
-      }, 1000);
+      }, 10000);
       return () => clearInterval(timer);
     }, [countdown]);
     
@@ -123,7 +125,7 @@
 
     const handleSelect1=()=>{
       
-   
+   let a=0;
       if (historyselect && shuffledHistoryDeck.length > 0) {
         if(conditionforhis(shuffledHistoryDeck[historyIndex])){
           alert("meaximum 3 card can seleted");
@@ -136,6 +138,7 @@
 
         setCurrent1(shuffledHistoryDeck[historyIndex]);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
+        a=1;
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
         if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
           alert("meaximum 3 card can seleted");
@@ -145,11 +148,19 @@
         setCurrent1(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
+        a=1;
       }
-      x++;
+      setsc(sc+1);
+      if(sc>=3){
+        if(a==2){
+          result(shuffledExaminationDeck[examinationIndex],current2,current3,current4);
+        }else{
+          result(shuffledHistoryDeck[historyIndex],current2,current3,current4);
+        }
+      }
     }
     const handleSelect2=()=>{
-     
+     let a=0;
       if (historyselect && shuffledHistoryDeck.length > 0) {
         if(conditionforhis(shuffledHistoryDeck[historyIndex])){
           alert("meaximum 3 card can seleted");
@@ -161,6 +172,7 @@
         setCurrent2(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
+        a=1;
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
         if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
           alert("meaximum 3 card can seleted");
@@ -169,11 +181,19 @@
         setCurrent2(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
+        a=2;
       }
-      x++;
+      setsc(sc+1);
+      if(sc>=3){
+        if(a==2){
+          result(current1,shuffledExaminationDeck[examinationIndex],current3,current4);
+        }else{
+          result(current1,shuffledHistoryDeck[historyIndex],current3,current4);
+        }
+      }
     }
     const handleSelect3=()=>{
-      
+      let a=0
       if (historyselect && shuffledHistoryDeck.length > 0) {
         if(conditionforhis(shuffledHistoryDeck[historyIndex])){
           alert("meaximum 3 card can seleted");
@@ -185,6 +205,7 @@
         setCurrent3(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 3) % shuffledHistoryDeck.length);
+        a=1;
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
         if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
           alert("meaximum 3 card can seleted");
@@ -192,12 +213,21 @@
         }
         setCurrent3(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
+        
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
+       a=2;
       }
-      x++;
+      setsc(sc+1);
+      if(sc>=3){
+        if(a==2){
+          result(current1,current2,shuffledExaminationDeck[examinationIndex],current4);
+        }else{
+          result(current1,current2,shuffledHistoryDeck[historyIndex],current4);
+        }
+      }
     }
     const handleSelect4=()=>{
-      
+      let a=0
       if (historyselect && shuffledHistoryDeck.length > 0) {
         if(conditionforhis(shuffledHistoryDeck[historyIndex])){
           alert("meaximum 3 card can seleted");
@@ -209,6 +239,7 @@
         setCurrent4(shuffledHistoryDeck[historyIndex]);
         // myMap.set(curr.text,true);
         setHistoryIndex((prevIndex) => (prevIndex + 1) % shuffledHistoryDeck.length);
+       a=1;
       } else if (examinationselect && shuffledExaminationDeck.length > 0) {
         if(conditionforexam(shuffledExaminationDeck[examinationIndex])){
           alert("meaximum 3 card can seleted");
@@ -217,38 +248,48 @@
         setCurrent4(shuffledExaminationDeck[examinationIndex]);
         //myMap.set(shuffledExaminationDeck[examinationIndex].id,true)
         setExaminationIndex((prevIndex) => (prevIndex + 1) % shuffledExaminationDeck.length);
+        a=2;
       }
-      x++;
-      result();
+      setsc(sc+1);
+      if(sc>=3){
+        if(a==2){
+          result(current1,current2,current3,shuffledExaminationDeck[examinationIndex]);
+        }else{
+          result(current1,current2,current3,shuffledHistoryDeck[historyIndex]);
+        }
+      }
+      
     }
 
-    const result=()=>{
-      if(x>=4){
-        alert('select 4 box');
-      }
-        if(current1.code=='H' && current2.code=='H' && current3.code=='H' && current4.code=='H'){
+    const result=(curr1,curr2,curr3,curr4)=>{
+     
+      if(sc>=3){
+        //console.log(current1,current2,current3,current4);
+      
+        if(curr1?.code=='H' && curr2?.code=='H' && curr3?.code=='H' && curr4?.code=='H'){
           setAlertVisible(true);
         }
-        else if(current1.code=='N' && current2.code=='N' && current3.code=='N' && current4.code=='N'){
+        else if(curr1?.code=='N' && curr2?.code=='N' && curr3?.code=='N' && curr4?.code=='N'){
           setAlertVisible(true);
         }else{
           setalertwrongVisible(true);
         }
+      }
     
     }
 
      const conditionforhis=(curr)=>{
-      console.log(curr);
-          if((current1?.type=='history' && current2?.type=='history' && current3?.type=='history') && curr.type=='history'){
+      //console.log(curr);
+          if((current1?.type=='history' && current2?.type=='history' && current3?.type=='history') && curr?.type=='history'){
             return true;
           }
-          else if((current1?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr.type=='history'){
+          else if((current1?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr?.type=='history'){
             return true;
           }
-          else if((current1?.type=='history' && current3?.type=='history' && current4?.type=='history') && curr.type=='history'){
+          else if((current1?.type=='history' && current3?.type=='history' && current4?.type=='history') && curr?.type=='history'){
             return true;
           }
-          else if((current3?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr.type=='history'){
+          else if((current3?.type=='history' && current2?.type=='history' && current4?.type=='history') && curr?.type=='history'){
             return true;
           }else{
             return false;
@@ -276,44 +317,49 @@
 
     return (
       <div>
+        
         <div className="w-full h-auto md:flex">
+        
           {/* history Section */}
-          <div className="w-full h-80 m-8 border border-black flex flex-col items-center">
-            <div className="text-pink-500 font-bold">History</div>
+          <div className="w-full h-80 m-7  flex flex-col items-center">
+            <div className="text-blue-600 font-bold text-2xl">History</div>
             <div
-              className="relative w-48 h-56 cursor-pointer"
+              className="relative w-60 h-72 cursor-pointer"
               onClick={handleHistoryClick}
             >
-              <div className="absolute inset-0 bg-blue-100 border border-gray-400 transform translate-y-12 translate-x-8"></div>
-              <div className="absolute inset-0 bg-blue-200 border border-gray-400 transform translate-y-9 translate-x-6"></div>
+              <div className="absolute inset-0 bg-blue-500 border border-gray-400 transform translate-y-12 translate-x-8"></div>
+              <div className="absolute inset-0 bg-blue-400 border border-gray-400 transform translate-y-9 translate-x-6"></div>
               <div className="absolute inset-0 bg-blue-300 border border-gray-400 transform translate-y-6 translate-x-4"></div>
-              <div className="absolute inset-0 bg-blue-400 border border-gray-400 transform translate-y-3 translate-x-2"></div>
-              <div className="absolute inset-0 bg-blue-500 border border-gray-400 flex items-center justify-center">
-                <p>{shuffledHistoryDeck[historyIndex]?.text}</p>
+              <div className="absolute inset-0 bg-blue-200 border border-gray-400 transform translate-y-3 translate-x-2"></div>
+              <div className="absolute inset-0 bg-blue-100 border border-gray-400 flex items-center justify-center">
+                <p className='text-center text-xl'>{shuffledHistoryDeck[historyIndex]?.text}</p>
               </div>
             </div>
           </div>
           {/* Examination Section */}
-          <div className="w-full h-80 m-8 border border-black flex flex-col items-center">
-            <div className="text-pink-500 font-bold">Examination</div>
+          <div className="w-full h-80 m-7 flex flex-col items-center">
+          <div className="text-blue-600 font-bold text-2xl">Examination</div>
             <div
-              className="relative w-48 h-56 cursor-pointer"
+              className="relative w-60 h-72 cursor-pointer"
               onClick={handleExaminationClick}
             >
-              <div className="absolute inset-0 bg-blue-100 border border-gray-400 transform translate-y-12 translate-x-8"></div>
-              <div className="absolute inset-0 bg-blue-200 border border-gray-400 transform translate-y-9 translate-x-6"></div>
+              <div className="absolute inset-0 bg-blue-500 border border-gray-400 transform translate-y-12 translate-x-8"></div>
+              <div className="absolute inset-0 bg-blue-400 border border-gray-400 transform translate-y-9 translate-x-6"></div>
               <div className="absolute inset-0 bg-blue-300 border border-gray-400 transform translate-y-6 translate-x-4"></div>
-              <div className="absolute inset-0 bg-blue-400 border border-gray-400 transform translate-y-3 translate-x-2"></div>
-              <div className="absolute inset-0 bg-blue-500 border border-gray-400 flex items-center justify-center">
-                <p>{shuffledExaminationDeck[examinationIndex]?.text}</p>
+              <div className="absolute inset-0 bg-blue-200 border border-gray-400 transform translate-y-3 translate-x-2"></div>
+              <div className="absolute inset-0 bg-blue-100 border border-gray-400 flex items-center justify-center">
+                <p className='text-center text-xl'>{shuffledExaminationDeck[examinationIndex]?.text}</p>
               </div>
             </div>
           </div>
+          <div>
+          <p className="text-blue-600 font-bold text-xl m-2">Timer:{countdown}s</p>
+          </div>
         </div>
         <div>
-          <h2 className="font-bold text-center text-2xl">Choose the correct sequence</h2>
+          <h2 className="text-blue-600 font-bold text-center text-2xl">Choose the correct sequence</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 p-4">
-  <div className="border border-black w-full h-60 flex items-center justify-center" onClick={() => handleSelect1()}>
+  <div className="border border-black w-full  h-60 flex items-center justify-center" onClick={() => handleSelect1()}>
     <p>{current1?.text}</p>
   </div>
   <div className="border border-black w-full h-60 flex items-center justify-center" onClick={() => handleSelect2()}>
@@ -329,9 +375,7 @@
 
           <div className='flex flex-col items-center m-9'>
           {/* <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onClick={result}>Submit</button> */}
-      <div>
-          <p className="mt-4 text-xl">Countdown: {countdown}s</p>
-          </div>
+      
           </div>
           {alertVisible && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
